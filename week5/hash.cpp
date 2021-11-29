@@ -14,8 +14,8 @@ const int mx = 1e6+1;
 const int base = 31;
 const int mod = 1e9+1;
 
-vector <int> pref(mx); // prefixes of string
-vector <int>  pw (mx); // powers of base
+vector <ll> pref(mx); // prefixes of string
+vector <ll>  pw (mx); // powers of base
 
 void preCal() {
     // compute the power of base
@@ -36,7 +36,7 @@ void build (const string & s) {
 
 int getHash (int i, int j) {
     // returns the hash value of substring of s from i to j inclusive 
-    int ans = pref[j];
+    ll ans = pref[j];
     if (i-1 >= 0) {
         ans = ans - (pref[i-1] * pw[j-i+1]) % mod;
     }
