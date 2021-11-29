@@ -11,7 +11,17 @@
 #define endl  "\n"
 using namespace std; 
 
- 
+class Compare
+{
+public:
+    bool operator() (pair<int, ll> a, pair <int, ll> b)
+    {
+        if (a.first != b.first) {
+            return a.first > b.first;
+        }
+        return a.second < b.second;
+    }
+};
 
 int main()
 {
