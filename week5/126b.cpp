@@ -10,6 +10,14 @@
 #define endl  "\n"
 using namespace std; 
 
+// problem: https://codeforces.com/contest/126/problem/B
+/*
+Algo:
+for each prefix and suffix of varying length, store it in an array
+use binary search to check if this length also can be found in the
+middle string.
+*/
+
 const int mx = 1e6+1;
 const int base = 31;
 const int mod = 1e9+7;
@@ -49,10 +57,7 @@ int getHash (int i, int j) {
 }
 
 bool check (const string & s, int len) {
-    // precondition: 2*len <= s.length();
     ll prefix_hash = getHash(0, len-1);
-    ll postfix_hash = getHash(s.length() - len, s.length() - 1);
-    if (prefix_hash != postfix_hash) return false;
     for (int j = 1; j < s.length() - 1; ++j) {
         if (j + len - 1 < s.length() - 1) {
             if (getHash(j, j+len-1) == prefix_hash) return true;
@@ -63,11 +68,26 @@ bool check (const string & s, int len) {
 
 void solve (const string & s) {
 
-    for (int i = s.length() - 1; i >= 0; i--) {
-        if (check(s, i)) {
-            ans = i;
-            out = s.substr(0, i);
-            break;
+    vector <ll> lens;
+    for (int i = 0; i <= s.length(); ++i) {
+        ll prefix_hash = getHash(0, i-1);
+        ll postfix_hash = getHash(s.length() - i, s.length() - 1);
+        if (prefix_hash == postfix_hash) {
+            lens.push_back(i);
+        }
+    }
+    // lens is increasing monotonically now
+    ll l = 0, r = lens.size()-1;
+    
+    while (l <= r) {
+        ll mid_index = (l+r) / 2;
+        ll mid = lens[mid_index];
+        if (check(s, mid)) {
+            ans = mid;
+            out = s.substr(0, mid);
+            l = mid_index + 1;
+        } else {
+            r = mid_index - 1;
         }
     }
    if (ans == 0) {
