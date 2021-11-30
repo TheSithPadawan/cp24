@@ -53,6 +53,10 @@ int main()
     ios_base::sync_with_stdio(0);
     // untie cin and cout; thus need to flush cout manually
     cin.tie(0);
+    string s = "babad";
+    preCal();
+    build(s);
+    cout << getHash(1,1) << " " << getHash(3,3) << endl;
     
     return 0; 
 }
