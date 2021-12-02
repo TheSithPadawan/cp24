@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#define ll long long
+#define int long long
 #define  um unordered_map
 #define us unordered_set
 #define pq priority_queue
@@ -11,19 +11,9 @@
 #define endl  "\n"
 using namespace std; 
 
-class Compare
-{
-public:
-    bool operator() (pair<int, ll> a, pair <int, ll> b)
-    {
-        if (a.first != b.first) {
-            return a.first > b.first;
-        }
-        return a.second < b.second;
-    }
-};
+// to do: add c++ comparator tempalte
 
-int main()
+int32_t main()
 {
     // allows c++ to has its own buffer
     // faster in some cases
