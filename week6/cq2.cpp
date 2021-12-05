@@ -9,14 +9,10 @@
 // https://cses.fi/problemset/task/1688
 
 /*
-brute force: 
-answer 1 query takes O(n), overall runtime takes O(n^2) where n is the # nodes
-
-binary lifting:
-for each node, store log n entries for the parents 
-when we get k, do a binary decomposition on k, and jump accordingly
-For example 
-k = 6 (110) = 2 + 4; first jump 2 levels up, then jump 4 levels up
+Algorithm:
+- index employee A and B by depths, directory has depth(0)
+- use binary lifting to move A and B to the same depth
+- Use binary search to find LCA. Complexity O(n * logn * log n)
 */
  
 #define endl  "\n"
@@ -24,6 +20,11 @@ using namespace std;
 const int mx = 2e5 + 5;
 vector <int> v[mx];
 vector <int> depth(mx);
+
+const int LOG = 25;
+vector <int> par (mx);
+int up[mx][LOG];
+
 
 void dfs(int node, int par) {
     depth[node] = depth[par] + 1;
@@ -89,6 +90,7 @@ int32_t main()
     while (q--) {
         int a, b;
         cin >> a >> b;
+        // make sure a is higher up in the tree than b
         if (depth[a] > depth[b]) {
             swap(a, b);
         }
@@ -101,11 +103,13 @@ int32_t main()
         }
         int l = 0, r = depth[a] - 1;
         int ans = 0;
+        // a and b are at the same depth now
         while (l <= r) {
             int mid = (l+r) / 2;
-            if (jump(a) == jump(b)) {
+            int k = depth[a] - mid;
+            if (jump(a, k) == jump(b, k)) {
                 // try go lower 
-                ans = jump(a);
+                ans = jump(a, k);
                 l = mid+1;
             } else {
                 r = mid-1;
