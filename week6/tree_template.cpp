@@ -40,8 +40,8 @@ int jump (int e, int k) {
     return e;
 }
 
-void binary_lifting() {
-    // pre-compute up matrix
+void binary_lifting(int n) {
+    // pre-compute up matrix, n is the number of nodes
     for (int i = 1; i <= n; ++i) {
         // 2 ^ 0 = 1, it's just the parent
         up[i][0] = par[i];
