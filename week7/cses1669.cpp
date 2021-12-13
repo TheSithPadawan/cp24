@@ -43,29 +43,6 @@ int dfs(int node, int parent)
 	return -1;
 }
 
-int dfs2(int node, int parent)
-{
-	//visiting this node
-
-	vis[node] = 1;
-	par[node] = parent;
-	cout << "node " << node << endl;
-	for(auto x : v[node])
-	{
-		if (x == parent) continue;
-		if(vis[x] == 0) {
-			int res = dfs2(x, node);
-			if (res != -1) {
-				return res;
-			}
-		} else {
-			return x;
-		}
-	}
-	return -1;
-}
-
-
 void print_path (int node, int start, vector <int> & paths)
 {
 	//visiting this node
@@ -118,14 +95,12 @@ int32_t main()
 		if (vis[i] == 0) {
 			start = dfs(i, -1);
 			if (start != -1) break;
-			// dfs2(i, 0);
 		}
 	}
 	if (start == -1) {
 		cout << "IMPOSSIBLE" << endl;
 		return 0;
 	}
-	// cout << "start: " << start << endl;
 	// print path
 	fill (vis.begin(), vis.end(), 0);
 	vector <int> paths;
